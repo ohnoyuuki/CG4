@@ -16,4 +16,13 @@ public:
 	// デストラクタ
 	~GameScene();
 
+	private:
+		//カメラ
+	    Camera* camera_ = nullptr;
+		//テクスチャハンドル
+	    uint32_t textureHandle_ = 0;
+		//四角形
+	    Model2* model_ = nullptr;
+		//ワールド座標
+	    WorldTransform worldTransform_;
 };
