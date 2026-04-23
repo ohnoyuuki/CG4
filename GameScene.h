@@ -22,7 +22,7 @@ public:
 		//テクスチャハンドル
 	    uint32_t textureHandle_ = 0;
 		//四角形
-	    Model2* model_ = nullptr;
+	    Model* model_ = nullptr;
 		//ワールド座標
 	    WorldTransform worldTransform_;
 };
