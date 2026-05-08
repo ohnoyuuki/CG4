@@ -7,6 +7,9 @@ using namespace KamataEngine;
 class GameScene {
 
 public:
+
+	//GameScene();
+
 	// 初期化
 	void Initialize();
 	// 毎フレーム更新
@@ -18,11 +21,11 @@ public:
 
 	private:
 		//カメラ
-	    Camera* camera_ = nullptr;
+	    Camera* camera_;
 		//テクスチャハンドル
 	    uint32_t textureHandle_ = 0;
 		//四角形
-	    Model* model_ = nullptr;
+	    Model2* model2 = nullptr;
 		//ワールド座標
 	    WorldTransform worldTransform_;
 };
