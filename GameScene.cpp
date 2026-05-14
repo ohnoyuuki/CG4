@@ -1,39 +1,47 @@
 #include "GameScene.h"
-
-using namespace KamataEngine;
-
-// GameScene::GameScene() {}
-
 // 初期化
 void GameScene::Initialize() {
-
-	
-	// カメラ生成
-	camera_->Initialize();
-	// テクスチャ読み込み
+	Model2::StaticInitialize();
+	// カメラの初期化
+	camera_.Initialize();
+	// ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("uvChecker.png");
-	// ワールド座標
+	//  ワールド変換の初期化
 	worldTransform_.Initialize();
 	worldTransform_.scale_ = {2, 2, 2};
-	// 四角形３Dモデル生成
+	// 3Dモデルデータの生成
 	model2 = Model2::CreateSquare(1);
-
-	Model2::StaticFinalize();
 }
+
 
 // 更新
 void GameScene::Update() {
-	// 3Dモデル更新
+	// 3Dモデルを更新
 	worldTransform_.UpdateMatrix();
 }
 
+
 // 描画
-void GameScene::Draw() { Model::PreDraw(); }
+void GameScene::Draw() {
+	// DirectXCommon インスタンスの取得
+	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
+
+	// 3Dモデル描画前処理
+	Model2::PreDraw(dxCommon->GetCommandList());
+
+	// 3Dモデルを描画
+	model2->Draw(worldTransform_, camera_, textureHandle_);
+
+	// 3Dモデル描画後処理
+	Model2::PostDraw();
+}
+
 
 // デストラクタ
 GameScene::~GameScene() {
-	// 3Dモデル解放
+	// 3Dモデルデータの解放
 	delete model2;
-
 	Model2::StaticFinalize();
 }
+
+GameScene::GameScene() {}
