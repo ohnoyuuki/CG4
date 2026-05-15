@@ -784,7 +784,7 @@ void ModelCommon2::InitializeGraphicsPipeline() {
 	descRangeSRV.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0); // t0 レジスタ
 
 	// ルートパラメータ
-	CD3DX12_ROOT_PARAMETER rootparams[6];
+	CD3DX12_ROOT_PARAMETER rootparams[6] = {};
 	rootparams[0].InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
 	rootparams[1].InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_ALL);
 	rootparams[2].InitAsConstantBufferView(2, 0, D3D12_SHADER_VISIBILITY_ALL);
@@ -829,21 +829,26 @@ Model2* Model2::CreateSquare(int max) {
 	indices.resize(kNumIndices);
 
 	for (int i = 0; i < max; i++) {
+		// 頂点開始番号
 		int index = i * 4;
+
+		// 横にずらす量
+		float offsetX = i * 2.0f;
+
 		// 左下
-		vertices[index + 0].pos = {-1.0f, -1.0f, 0.0f};
+		vertices[index + 0].pos = {-1.0f + offsetX, -1.0f, 0.0f};
 		vertices[index + 0].uv = {0, 1};
 		vertices[index + 0].normal = {0, 0, 1};
 		// 左上
-		vertices[index + 1].pos = {-1.0f, 1.0f, 0.0f};
+		vertices[index + 1].pos = {-1.0f + offsetX, 1.0f, 0.0f};
 		vertices[index + 1].uv = {0, 0};
 		vertices[index + 1].normal = {0, 0, 1};
 		// 右下
-		vertices[index + 2].pos = {1.0f, -1.0f, 0.0f};
+		vertices[index + 2].pos = {1.0f + offsetX, -1.0f, 0.0f};
 		vertices[index + 2].uv = {1, 1};
 		vertices[index + 2].normal = {0, 0, 1};
 		// 右上
-		vertices[index + 3].pos = {1.0f, 1.0f, 0.0f};
+		vertices[index + 3].pos = {1.0f + offsetX, 1.0f, 0.0f};
 		vertices[index + 3].uv = {1, 0};
 		vertices[index + 3].normal = {0, 0, 1};
 	}
@@ -855,6 +860,7 @@ Model2* Model2::CreateSquare(int max) {
 		indices[index + 0] = vertex + 0;
 		indices[index + 1] = vertex + 1;
 		indices[index + 2] = vertex + 2;
+
 		indices[index + 3] = vertex + 1;
 		indices[index + 4] = vertex + 3;
 		indices[index + 5] = vertex + 2;
