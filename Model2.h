@@ -118,6 +118,13 @@ public: // 静的メンバ関数
 	// 四角形モデルの生成
 	static Model2* CreateSquare(int max);
 
+	// リングモデルの生成
+	static Model2* CreateRing(int divide);
+
+
+
+
+
 	/// <summary>
 	/// 3Dモデル生成
 	/// </summary>
@@ -139,6 +146,9 @@ public: // 静的メンバ関数
 	/// <param name="divisionHorizontal">水平方向（経度）分割数</param>
 	/// <returns>生成されたモデル</returns>
 	static Model2* CreateSphere(uint32_t divisionVertial = 10, uint32_t divisionHorizontal = 10);
+
+
+
 
 	/// <summary>
 	/// 描画前処理
