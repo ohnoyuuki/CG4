@@ -10,7 +10,9 @@ void GameScene::Initialize() {
 	worldTransform_.Initialize();
 	worldTransform_.scale_ = {2, 2, 2};
 	// 3Dモデルデータの生成
-	model2 = Model2::CreateSquare(5);
+	//model2 = Model2::CreateSquare(5);
+	// リングモデルの生成
+	model2 = Model2::CreateRing(16);
 }
 
 // 更新
