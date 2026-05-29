@@ -5,7 +5,8 @@ void GameScene::Initialize() {
 	// カメラの初期化
 	camera_.Initialize();
 	// ファイル名を指定してテクスチャを読み込む
-	textureHandle_ = TextureManager::Load("uvChecker.png");
+	//textureHandle_ = TextureManager::Load("uvChecker.png");
+	textureHandle_ = TextureManager::Load("white1x1.png");
 	//  ワールド変換の初期化
 	worldTransform_.Initialize();
 	worldTransform_.scale_ = {2, 2, 2};
@@ -42,6 +43,7 @@ void GameScene::Draw() {
 GameScene::~GameScene() {
 	// 3Dモデルデータの解放
 	delete model2;
+
 	Model2::StaticFinalize();
 }
 

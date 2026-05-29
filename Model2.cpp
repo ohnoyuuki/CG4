@@ -934,6 +934,8 @@ Model2* Model2::CreateRing(int divide) {// メモリ確保
 	return instance;
 }
 
+Model2* Model2::CreateDiamond() { return nullptr; }
+
 
 
 } // namespace KamataEngine

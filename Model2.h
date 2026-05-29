@@ -121,7 +121,8 @@ public: // 静的メンバ関数
 	// リングモデルの生成
 	static Model2* CreateRing(int divide);
 
-
+	// 菱形モデルの生成
+	static Model2* CreateDiamond();
 
 
 
