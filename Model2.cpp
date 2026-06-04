@@ -934,7 +934,46 @@ Model2* Model2::CreateRing(int divide) {// メモリ確保
 	return instance;
 }
 
-Model2* Model2::CreateDiamond() { return nullptr; }
+//菱形モデル
+Model2* Model2::CreateDiamond() {
+	Model2* instance = new Model2;
+
+	std::vector<Mesh::VertexPosNormalUv> vertices(4);
+	std::vector<uint32_t> indices(6);
+
+	// 上
+	vertices[0].pos = {0.0f, 1.0f, 0.0f};
+	vertices[0].uv = {0.5f, 0.0f};
+	vertices[0].normal = {0.0f, 0.0f, 1.0f};
+
+	// 左
+	vertices[1].pos = {-1.0f, 0.0f, 0.0f};
+	vertices[1].uv = {0.0f, 0.5f};
+	vertices[1].normal = {0.0f, 0.0f, 1.0f};
+
+	// 右
+	vertices[2].pos = {1.0f, 0.0f, 0.0f};
+	vertices[2].uv = {1.0f, 0.5f};
+	vertices[2].normal = {0.0f, 0.0f, 1.0f};
+
+	// 下
+	vertices[3].pos = {0.0f, -1.0f, 0.0f};
+	vertices[3].uv = {0.5f, 1.0f};
+	vertices[3].normal = {0.0f, 0.0f, 1.0f};
+
+	// 三角形2枚
+	indices[0] = 0;
+	indices[1] = 2;
+	indices[2] = 1;
+
+	indices[3] = 1;
+	indices[4] = 2;
+	indices[5] = 3;
+
+	instance->InitializeFromVertices(vertices, indices);
+
+	return instance;
+}
 
 
 

@@ -21,10 +21,22 @@ private:
 	// カメラ
 	Camera camera_;
 
+	Model2* model2_ = nullptr;
+
+	Model2* model2_2_ = nullptr;
+
+	Model2* model2_3_ = nullptr;
+
+
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0;
 
 	Model2* model2 = nullptr;
+
+	Model2* modelDiamond_ = nullptr;
+
+	Model2* modelEffect_ = nullptr;
+
 
 	// ワールド変換データ
 	WorldTransform worldTransform_;

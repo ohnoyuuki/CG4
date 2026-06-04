@@ -13,7 +13,13 @@ void GameScene::Initialize() {
 	// 3Dモデルデータの生成
 	//model2 = Model2::CreateSquare(5);
 	// リングモデルの生成
-	model2 = Model2::CreateRing(16);
+	//model2 = Model2::CreateRing(16);
+	
+	// 菱形モデルの生成
+	modelDiamond_ = Model2::CreateDiamond();
+
+	// 3Dモデルデータ生成
+	//modelEffect_ = Model2::CreateFromOBJ("plane");
 }
 
 // 更新
@@ -31,8 +37,11 @@ void GameScene::Draw() {
 	// 3Dモデル描画前処理
 	Model2::PreDraw(dxCommon->GetCommandList());
 
-	// 3Dモデルを描画
-	model2->Draw(worldTransform_, camera_, textureHandle_);
+	// リングモデルを描画
+	//model2->Draw(worldTransform_, camera_, textureHandle_);
+
+	// 菱形モデルを描画
+	modelDiamond_->Draw(worldTransform_, camera_, textureHandle_);
 
 	// 3Dモデル描画後処理
 	Model2::PostDraw();
