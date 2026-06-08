@@ -10,40 +10,41 @@ void GameScene::Initialize() {
 	srand((unsigned int)time(nullptr));
 
 	Model2::StaticInitialize();
+
 	// カメラの初期化
 	camera_.Initialize();
 	// ファイル名を指定してテクスチャを読み込む
 	//textureHandle_ = TextureManager::Load("uvChecker.png");
 	textureHandle_ = TextureManager::Load("white1x1.png");
 
-	//  ワールド変換の初期化
-	worldTransform_.Initialize();
-	worldTransform_.scale_ = {2, 2, 2};
-	// 3Dモデルデータの生成
-	//model2 = Model2::CreateSquare(5);
-	// リングモデルの生成
-	//model2 = Model2::CreateRing(16);
-	
 	// 菱形モデルの生成
 	modelDiamond_ = Model2::CreateDiamond();
-	// 3Dモデルデータ生成
-	//modelEffect_ = Model2::CreateFromOBJ("plane");
 
-	// Y方向の大きさを乱数で決定
-	worldTransform_.scale_.x = 0.2f;
-	worldTransform_.scale_.y = 5.0f + (float)rand() / RAND_MAX * 15.0f;
-	worldTransform_.scale_.z = 1.0f;
+	for (uint32_t i = 0; i < kEffectCount; i++) {
 
-	// Z軸回転を乱数で決定（0～2π）
-	worldTransform_.rotation_.z = (float)rand() / RAND_MAX * (std::numbers::pi_v<float> * 2.0f);
+		worldTransforms_[i].Initialize();
 
-	worldTransform_.UpdateMatrix();
+		// X方向は細く固定
+		worldTransforms_[i].scale_.x = 0.2f;
+
+		// Y方向をランダム
+		worldTransforms_[i].scale_.y = 5.0f + (float)rand() / RAND_MAX * 15.0f;
+
+		worldTransforms_[i].scale_.z = 1.0f;
+
+		// Z回転をランダム
+		worldTransforms_[i].rotation_.z = (float)rand() / RAND_MAX * (std::numbers::pi_v<float> * 2.0f);
+
+		worldTransforms_[i].UpdateMatrix();
+	}
 }
 
 // 更新
 void GameScene::Update() {
 	// 3Dモデルを更新
-	worldTransform_.UpdateMatrix();
+	for (uint32_t i = 0; i < kEffectCount; i++) {
+		worldTransforms_[i].UpdateMatrix();
+	}
 }
 
 
@@ -59,7 +60,10 @@ void GameScene::Draw() {
 	//model2->Draw(worldTransform_, camera_, textureHandle_);
 
 	// 菱形モデルを描画
-	modelDiamond_->Draw(worldTransform_, camera_, textureHandle_);
+	for (uint32_t i = 0; i < kEffectCount; i++) {
+
+		modelDiamond_->Draw(worldTransforms_[i], camera_, textureHandle_);
+	}
 
 	// 3Dモデル描画後処理
 	Model2::PostDraw();

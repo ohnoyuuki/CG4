@@ -38,6 +38,9 @@ private:
 	Model2* modelEffect_ = nullptr;
 
 
-	// ワールド変換データ
-	WorldTransform worldTransform_;
+	//// ワールド変換データ
+	//WorldTransform worldTransform_;
+
+	static const uint32_t kEffectCount = 10;
+	WorldTransform worldTransforms_[kEffectCount];
 };
