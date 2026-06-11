@@ -42,5 +42,14 @@ private:
 	//WorldTransform worldTransform_;
 
 	static const uint32_t kEffectCount = 10;
-	WorldTransform worldTransforms_[kEffectCount];
+
+	struct EffectData {
+		WorldTransform worldTransform;
+		ObjectColor objectColor;
+		float alpha = 1.0f;
+	};
+
+	EffectData effects_[kEffectCount];
+
+	/*WorldTransform worldTransforms_[kEffectCount];*/
 };
