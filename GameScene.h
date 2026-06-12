@@ -1,55 +1,43 @@
 #pragma once
+
+#include "Effect.h"
 #include "KamataEngine.h"
-#include "Model2.h"
 
 using namespace KamataEngine;
 
+// ゲームシーン
 class GameScene {
-
 public:
-	// 初期化
-	void Initialize();
-	// 毎フレーム更新
-	void Update();
-	// 描画
-	void Draw();
-	// デストラクタ
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	~GameScene();
-	GameScene();
+
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	void Initialize();
+
+	/// <summary>
+	/// 更新
+	/// </summary>
+	void Update();
+
+	/// <summary>
+	/// 描画
+	/// </summary>
+	void Draw();
 
 private:
 	// カメラ
 	Camera camera_;
 
-	Model2* model2_ = nullptr;
+	// 3Dモデル エフェクト
+	Model* modelEffect_ = nullptr;
 
-	Model2* model2_2_ = nullptr;
+	// エフェクト
+	std::list<Effect*> effects_;
 
-	Model2* model2_3_ = nullptr;
-
-
-	// テクスチャハンドル
-	uint32_t textureHandle_ = 0;
-
-	Model2* model2 = nullptr;
-
-	Model2* modelDiamond_ = nullptr;
-
-	Model2* modelEffect_ = nullptr;
-
-
-	//// ワールド変換データ
-	//WorldTransform worldTransform_;
-
-	static const uint32_t kEffectCount = 10;
-
-	struct EffectData {
-		WorldTransform worldTransform;
-		ObjectColor objectColor;
-		float alpha = 1.0f;
-	};
-
-	EffectData effects_[kEffectCount];
-
-	/*WorldTransform worldTransforms_[kEffectCount];*/
+	// エフェクト発生
+	void EffectBorn(KamataEngine::Vector3 position);
 };

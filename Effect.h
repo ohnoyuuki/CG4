@@ -3,37 +3,40 @@
 #include "KamataEngine.h"
 
 using namespace KamataEngine;
-using namespace MathUtility;
 
 class Effect {
-public:
+public: // メンバ関数
+	/// 初期化
+	// void Initialize(Model* model, Vector3 position, float rotate, float size);
+	// void Initialize(KamataEngine::Model* model, float rotate, float size);
 	void Initialize(Model* model, float rotate, float size, Vector3 position, Vector3 color);
+	// void Initialize(KamataEngine::Model* model);
 
+	/// 毎フレーム処理
 	void Update();
 
+	/// 描画
 	void Draw(Camera& camera);
 
+	// デスフラグのgetter
 	bool IsFinished() const { return isFinished_; }
 
 private:
-	// 存続時間
-	const float kDuration = 1.0f;
-
-	// 経過時間
-	float counter_ = 0.0f;
-
-	// 終了フラグ
-	bool isFinished_ = false;
-
+	// ワールド変換データ
+	WorldTransform worldTransform_;
 	// モデル
 	Model* model_ = nullptr;
 
-	// ワールド変換
-	WorldTransform worldTransform_;
+	// 終了フラグ
+	bool isFinished_ = false;
+	// 経過時間カウント
+	float counter_ = 0.0f;
 
-	// 色変更
+	// 存続時間（消滅までの時間）<秒>
+	static inline const float kDuration = 0.5f;
+
+	// 色変更オブジェクト
 	ObjectColor objectColor_;
-
-	// RGBAカラー
-	Vector4 color_ = {1, 1, 1, 1};
+	// 色の数値
+	Vector4 color_ = {};
 };
