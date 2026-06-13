@@ -1,43 +1,38 @@
 #pragma once
 
-#include "Effect.h"
 #include "KamataEngine.h"
-
-using namespace KamataEngine;
+#include "Particle.h"
 
 // ゲームシーン
 class GameScene {
 public:
-	/// <summary>
+	
 	/// デストラクタ
-	/// </summary>
 	~GameScene();
 
-	/// <summary>
+
 	/// 初期化
-	/// </summary>
 	void Initialize();
 
-	/// <summary>
+
 	/// 更新
-	/// </summary>
 	void Update();
 
-	/// <summary>
+
 	/// 描画
-	/// </summary>
 	void Draw();
 
 private:
+	// パーティクル3Dモデルデータ
+	KamataEngine::Model* modelParticle_ = nullptr;
+
 	// カメラ
-	Camera camera_;
+	KamataEngine::Camera camera_;
 
-	// 3Dモデル エフェクト
-	Model* modelEffect_ = nullptr;
+	// パーティクル
+	Particle* particle_ = nullptr;
+	std::list<Particle*> particles_;
 
-	// エフェクト
-	std::list<Effect*> effects_;
-
-	// エフェクト発生
-	void EffectBorn(KamataEngine::Vector3 position);
+	/// パーティクル発生
+	void ParticleBorn(Vector3 position);
 };
