@@ -33,7 +33,7 @@ void GameScene::Initialize() {
 void GameScene::Update() {
 	// エフェクト発生
 	if (rand() % 5 == 0) {
-		Vector3 position = {distribution(randomEngine), distribution(randomEngine), 0};
+		Vector3 position = {distribution(randomEngine)-2.0f, distribution(randomEngine), 0};
 		position *= 10;
 		EffectBorn(position);
 	}

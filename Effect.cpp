@@ -48,6 +48,9 @@ void Effect::Update() {
 	worldTransform_.rotation_.z += 0.1f;
 	worldTransform_.scale_.x *= 1.05f;
 	worldTransform_.scale_.y *= 1.07f;
+	//worldTransform_.translation_.y -= 1.0f;
+	worldTransform_.translation_.x += 1.0f;
+
 
 	worldTransform_.UpdateMatrix();
 }
