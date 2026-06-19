@@ -32,4 +32,11 @@ private:
 	float counter_ = 0.0f;
 	// 存続時間（消滅までの時間）<秒>
 	const float kDuration = 1.0f;
+
+	//色変更オブジェクト
+	ObjectColor objectColor_;
+
+	//色の数値
+	Vector4 color_;
+
 };

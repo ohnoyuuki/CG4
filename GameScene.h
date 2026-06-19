@@ -24,10 +24,10 @@ public:
 
 private:
 	// パーティクル3Dモデルデータ
-	KamataEngine::Model* modelParticle_ = nullptr;
+	Model* modelParticle_ = nullptr;
 
 	// カメラ
-	KamataEngine::Camera camera_;
+	Camera camera_;
 
 	// パーティクル
 	Particle* particle_ = nullptr;
