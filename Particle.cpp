@@ -9,22 +9,21 @@ void Particle::Initialize(Model* model, Vector3 position) {
 	// NULLポインタチェック
 	assert(model);
 
-	// 引数として受け取ったデータをメンバ変数に記録する
-	model_ = model;
-	worldTransform_.translation_ = position;
-
-	// 大きさ
-	worldTransform_.scale_ = {0.2f, 0.2f, 0.2f};
-
-	// 色の初期化
-	objectColor_.Initialize();
-	color_ = {1.0f, 1.0f,0.0f, 1.0f};
-
 	// ワールド変換の初期化
 	worldTransform_.Initialize();
 
+	// 引数として受け取ったデータをメンバ変数に記録する
+	model_ = model;
 
+	// 位置
+	worldTransform_.translation_ = position;
 
+	// 大きさ
+	worldTransform_.scale_ = {0.3f, 0.3f, 0.3f};
+
+	// 色の初期化
+	objectColor_.Initialize();
+	color_ = {1.0f, 1.0f, 0.0f, 1.0f};
 }
 
 // 更新
@@ -44,12 +43,11 @@ void Particle::Update() {
 		isFinished_ = true;
 	}
 
-	//色変更オブジェクトに色の数値を設定する
+	// 色変更オブジェクトに色の数値を設定する
 	objectColor_.SetColor(color_);
 
-
-		// 移動
-	worldTransform_.translation_ = {0.0f, 1.1f, 0.0f};
+	//上へ 移動
+	// worldTransform_.translation_ = {0.0f, 1.1f, 0.0f};
 
 	// 行列を更新
 	worldTransform_.UpdateMatrix();
