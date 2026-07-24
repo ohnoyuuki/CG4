@@ -1,6 +1,6 @@
 #include "Particle.h"
-#include <algorithm>
 #include <cassert>
+
 
 using namespace MathUtility;
 
@@ -47,6 +47,9 @@ void Particle::Update() {
 		// 終了扱いにする
 		isFinished_ = true;
 	}
+
+	//フェード処理
+	color_.w = std::clamp(1.0f - counter_ / kDuration, 0.0f, 1.0f);
 
 	// 色変更オブジェクトに色の数値を設定する
 	objectColor_.SetColor(color_);
