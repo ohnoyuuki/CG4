@@ -22,6 +22,9 @@ public:
 	/// 描画
 	void Draw();
 
+	//パーティクルの発生
+	void ParticleBorn();
+
 private:
 	// パーティクル3Dモデルデータ
 	Model* modelParticle_ = nullptr;

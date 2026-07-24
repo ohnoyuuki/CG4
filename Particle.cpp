@@ -1,7 +1,6 @@
 #include "Particle.h"
 #include <cassert>
 
-
 using namespace MathUtility;
 
 // 初期化
@@ -22,13 +21,11 @@ void Particle::Initialize(Model* model, Vector3 position, Vector3 velocity) {
 	velocity_ = velocity;
 
 	// 大きさ
-	worldTransform_.scale_ = {0.1f, 0.1f, 0.1f};
+	worldTransform_.scale_ = {0.2f, 0.2f, 0.2f};
 
 	// 色の初期化
 	objectColor_.Initialize();
 	color_ = {1.0f, 1.0f, 0.0f, 1.0f};
-
-	
 }
 
 // 更新
@@ -48,14 +45,16 @@ void Particle::Update() {
 		isFinished_ = true;
 	}
 
-	//フェード処理
+	// フェード処理
 	color_.w = std::clamp(1.0f - counter_ / kDuration, 0.0f, 1.0f);
 
 	// 色変更オブジェクトに色の数値を設定する
 	objectColor_.SetColor(color_);
 
-	//上へ 移動
-	worldTransform_.translation_ = velocity_;
+	// 移動
+	// worldTransform_.translation_ += {0.0f, 0.1f, 0.0f};
+	worldTransform_.translation_ += velocity_;
+
 
 	// 行列を更新
 	worldTransform_.UpdateMatrix();

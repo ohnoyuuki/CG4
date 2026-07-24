@@ -8,8 +8,6 @@ std::random_device seedGenerator;
 std::mt19937 randomEngine(seedGenerator());
 std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 
-
-
 // 初期化
 void GameScene::Initialize() {
 	// 乱数の初期化
@@ -21,38 +19,39 @@ void GameScene::Initialize() {
 	// カメラの初期化
 	camera_.Initialize();
 
+	//// パーティクルの生成
+	//for (int i = 0; i < 150; i++) {
+	//	// 生成
+	//	Particle* particle = new Particle();
+	//	// 位置
+	//	Vector3 position = {0.0f, 0.0f, 0.0f};
+	//	// 移動量
+	//	Vector3 velocity = {distribution(randomEngine), distribution(randomEngine), 0};
+	//	// 初期化
+	//	particle->Initialize(modelParticle_, position, velocity);
+	//	// リストに追加
+	//	particles_.push_back(particle);
 
-	//パーティクルの生成
-	for (int i = 0; i < 150; i++) {
-		// 生成
-		Particle* particle = new Particle();
-		//位置
-		Vector3 position = {0.0f, 0.0f, 0.0f};
-		//移動量
-		Vector3 velocity = {distribution(randomEngine), distribution(randomEngine),0};
-		// 初期化
-		particle->Initialize(modelParticle_, position, velocity);
-		// リストに追加
-		particles_.push_back(particle);
+	//	Normalize(velocity);
+	//	velocity *= distribution(randomEngine);
+	//	velocity *= 0.1f;
+	//}
+	// 発生位置は乱数
+	Vector3 position = {distribution(randomEngine) * 30.0f, distribution(randomEngine) * 20.0f, 0};
 
-		Normalize(velocity);
-		velocity *= distribution(randomEngine);
-		velocity *= 0.1f;
-	}
-
-	
-
+	// パーティクル発生
+	ParticleBorn(position);
 }
 
 // 更新
 void GameScene::Update() {
 	//// 確率で発生
-	//if (rand() % 20 == 0) {
-	//	// 発生位置は乱数
-	//	Vector3 position = {distribution(randomEngine) * 30.0f, distribution(randomEngine) * 20.0f, 0};
-	//	// パーティクルの生成
-	//	ParticleBorn(position);
-	//}
+	 if (rand() % 20 == 0) {
+		// 発生位置は乱数
+		Vector3 position = {distribution(randomEngine) * 30.0f, distribution(randomEngine) * 20.0f, 0};
+		// パーティクルの生成
+		ParticleBorn(position);
+	 }
 
 	// パーティクルの更新
 	for (Particle* particle : particles_) {
@@ -95,23 +94,22 @@ GameScene::~GameScene() {
 	particles_.clear();
 }
 
-
 // パーティクルの発生
-//void GameScene::ParticleBorn(Vector3 position) {
-//	// パーティクルの生成
-//	for (int i = 0; i < 150; i++) {
-//		// 生成
-//		Particle* particle = new Particle();
-//		// 位置
-//		//Vector3 position = { 0.0, 0.0f, 0.0f };
-//		// 移動量
-//		Vector3 velocity = {distribution(randomEngine), distribution(randomEngine), 0};
-//		Normalize(velocity);
-//		velocity *= distribution(randomEngine);
-//		velocity *= 0.1f;
-//		// 初期化
-//		particle->Initialize(modelParticle_, position);
-//		// リストに追加
-//		particles_.push_back(particle);
-//	}
-//}
+void GameScene::ParticleBorn(Vector3 position) {
+	// パーティクルの生成
+	for (int i = 0; i < 150; i++) {
+		// 生成
+		Particle* particle = new Particle();
+		// 位置
+		// Vector3 position = { 0.0, 0.0f, 0.0f };
+		// 移動量
+		Vector3 velocity = {distribution(randomEngine), distribution(randomEngine), 0};
+		Normalize(velocity);
+		velocity *= distribution(randomEngine);
+		velocity *= 0.1f;
+		// 初期化
+		particle->Initialize(modelParticle_, position, velocity);
+		// リストに追加
+		particles_.push_back(particle);
+	}
+}
