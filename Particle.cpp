@@ -1,6 +1,7 @@
 #include "Particle.h"
 #include <cassert>
 
+using namespace KamataEngine;
 using namespace MathUtility;
 
 // 初期化

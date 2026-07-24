@@ -2,14 +2,14 @@
 #include <KamataEngine.h>
 #include <algorithm>
 
-using namespace KamataEngine;
+
 
 // パーティクル
 class Particle {
 
 public:
 	/// 初期化
-	void Initialize(Model* model, Vector3 position, Vector3 velocity);
+	void Initialize(KamataEngine::Model* model, KamataEngine::Vector3 position, KamataEngine::Vector3 velocity);
 
 	/// 更新
 	void Update();
@@ -27,13 +27,13 @@ private:
 	KamataEngine::Model* model_ = nullptr;
 
 	// 色変更オブジェクト
-	ObjectColor objectColor_;
+	KamataEngine::ObjectColor objectColor_;
 
 	// 色の数値
-	Vector4 color_;
+	KamataEngine::Vector4 color_;
 
 	// 移動量
-	Vector3 velocity_;
+	KamataEngine::Vector3 velocity_;
 
 	// 終了フラグ
 	bool isFinished_ = false;

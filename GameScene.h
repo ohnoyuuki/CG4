@@ -27,15 +27,15 @@ public:
 
 private:
 	// パーティクル3Dモデルデータ
-	Model* modelParticle_ = nullptr;
+	KamataEngine::Model* modelParticle_ = nullptr;
 
 	// カメラ
-	Camera camera_;
+	KamataEngine::Camera camera_;
 
 	// パーティクル
 	Particle* particle_ = nullptr;
 	std::list<Particle*> particles_;
 
 	/// パーティクル発生
-	void ParticleBorn(Vector3 position);
+	void ParticleBorn(KamataEngine::Vector3 position);
 };
