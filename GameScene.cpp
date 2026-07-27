@@ -47,6 +47,12 @@ void GameScene::Initialize() {
 	textureHandleStage_ = TextureManager::Load("Scene/stage.png");
 	stage_ = new Stage();
 	stage_->Initialize(textureHandleStage_);
+
+	//プレイヤー
+	modelPlayer_ = Model::CreateFromOBJ("player");
+	player_ = new Player();
+	player_->Initialize(modelPlayer_);
+
 }
 
 // 更新
@@ -75,11 +81,26 @@ void GameScene::Update() {
 
 	// 背景
 	stage_->Update();
+
+	//プレイヤー
+	player_->Update();
 }
 
 // 描画
 void GameScene::Draw() {
+	//DirectXCommonインスタンスの取得
+	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
+	// スプライト描画前処理
+	Sprite::PreDraw(dxCommon->GetCommandList());
 
+	stage_->Draw();
+
+	// スプライト描画後処理
+	Sprite::PostDraw();
+
+
+	//深度バッファクリア
+	dxCommon->ClearDepthBuffer();
 	// 3Dモデル描画前処理
 	Model::PreDraw();
 
@@ -88,22 +109,20 @@ void GameScene::Draw() {
 		particle->Draw(camera_);
 	}
 
+	player_->Draw(camera_);
+
 	// 3Dモデル描画後処理
 	Model::PostDraw();
 
-	// スプライト描画前処理
-	Sprite::PreDraw();
-
-	stage_->Draw();
-
-	// スプライト描画後処理
-	Sprite::PostDraw();
+	
 }
 
 // デストラクタ
 GameScene::~GameScene() {
 	// 3Dモデルデータの解放
 	delete modelParticle_;
+	delete stage_;
+	delete player_;
 
 	// パーティクルの解放
 	for (Particle* particle : particles_) {
@@ -111,6 +130,9 @@ GameScene::~GameScene() {
 	}
 	particles_.clear();
 }
+
+
+
 
 // パーティクルの発生
 void GameScene::ParticleBorn(Vector3 position) {
