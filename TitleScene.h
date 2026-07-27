@@ -33,11 +33,11 @@ private:
 	// ビュープロジェクション
 	Camera camera_;
 
-	WorldTransform worldTransformTitle_;
-	WorldTransform worldTransformPlayer_;
+	// WorldTransform worldTransformTitle_;
+	// WorldTransform worldTransformPlayer_;
 
-	Model* modelPlayer_ = nullptr;
-	Model* modelTitle_ = nullptr;
+	// Model* modelPlayer_ = nullptr;
+	// Model* modelTitle_ = nullptr;
 
 	float counter_ = 0.0f;
 
@@ -52,16 +52,26 @@ private:
 
 	// 画像読み込み
 	uint32_t textureHandle_ = 0;
+	uint32_t titleBarHandle_ = 0;
+	uint32_t pushBarHandle_ = 0;
 
 	// スプライト
-	KamataEngine::Sprite* sprite_ = nullptr;
+	Sprite* sprite_ = nullptr;
+	Sprite* titleBarSprite_ = nullptr;
+	Sprite* pushBarSprite_ = nullptr;
+
+	// タイトルバー
+	float titleMove_ = 0.0f;
+	// pushバー
+	float pushAlpha_ = 1.0f;
+	bool pushFade_ = false;
 
 	// 音声ファイル
-	uint32_t soundTitleHandle_ = 0;
+	// uint32_t soundTitleHandle_ = 0;
 
 	// 音声再生ハンドル
-	int voiceTitleHandle_ = 0;
+	// int voiceTitleHandle_ = 0;
 
 	// 効果音ハンドル
-	uint32_t soundBotanHandle_ = 0;
+	// uint32_t soundBotanHandle_ = 0;
 };

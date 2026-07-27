@@ -4,62 +4,97 @@
 
 void TitleScene::Initialize() {
 	// 3Dモデルの生成
-	modelTitle_ = Model::CreateFromOBJ("titleFont", true);
-	modelPlayer_ = Model::CreateFromOBJ("roboto");
+	// modelTitle_ = Model::CreateFromOBJ("titleFont", true);
+	// modelPlayer_ = Model::CreateFromOBJ("roboto");
 
 	// カメラの初期化
 	camera_.Initialize();
 
 	// ワールド変更の初期化
-	worldTransformTitle_.Initialize();
-	worldTransformTitle_.scale_ = {2, 2, 2};
-	worldTransformTitle_.translation_ = {0, 8, 0};
+	// worldTransformTitle_.Initialize();
+	// worldTransformTitle_.scale_ = {2, 2, 2};
+	// worldTransformTitle_.translation_ = {0, 8, 0};
 
-	worldTransformPlayer_.Initialize();
-	worldTransformPlayer_.scale_ = {10, 10, 10};
-	worldTransformPlayer_.translation_ = {0, -8, 0};
-	worldTransformPlayer_.rotation_.y = std::numbers::pi_v<float>;
+	// worldTransformPlayer_.Initialize();
+	// worldTransformPlayer_.scale_ = {10, 10, 10};
+	// worldTransformPlayer_.translation_ = {0, -8, 0};
+	// worldTransformPlayer_.rotation_.y = std::numbers::pi_v<float>;
 
 	// フェード
 	fade_ = new Fade();
 	fade_->Initialize();
 	fade_->Start(Fade::Status::FadeIn, 1.0f);
+	phase_ = Phase::kFadeIn;
 
 	// 画像読み込み
-	textureHandle_ = TextureManager::Load("Game.png");
+	textureHandle_ = TextureManager::Load("Scene/Title.png");
+	titleBarHandle_ = TextureManager::Load("Sprite/CGGame.png");
+	pushBarHandle_ = TextureManager::Load("Sprite/PushBar.png");
 
 	// スプライトインスタンスの生成
 	sprite_ = Sprite::Create(textureHandle_, {0, 0});
+	titleBarSprite_ = Sprite::Create(titleBarHandle_, {0, 0});
+	pushBarSprite_ = Sprite::Create(pushBarHandle_, {0, 0});
+
+	// スプライトの位置変更
+	titleBarSprite_->SetPosition({250.0f, -150.0f});
+	pushBarSprite_->SetPosition({480.0f, 500.0f});
+
+	// スプライト大きさ変更
+	titleBarSprite_->SetSize({800.0f, 800.0f});
 
 	// 効果音データの読み込み
-	soundBotanHandle_ = Audio::GetInstance()->LoadWave("ALBotan.mp3");
+	// soundBotanHandle_ = Audio::GetInstance()->LoadWave("ALBotan.mp3");
 
 	// サウンドデータの読み込み
-	soundTitleHandle_ = Audio::GetInstance()->LoadWave("ALTitle.mp3");
+	// soundTitleHandle_ = Audio::GetInstance()->LoadWave("ALTitle.mp3");
 
 	// --- 再生ハンドルは全部初期化しておく ---
-	voiceTitleHandle_ = -1;
+	// voiceTitleHandle_ = -1;
 
 	// タイトルBGMをループで流す
-	voiceTitleHandle_ = Audio::GetInstance()->PlayWave(soundTitleHandle_, true);
+	// voiceTitleHandle_ = Audio::GetInstance()->PlayWave(soundTitleHandle_, true);
 }
 
 void TitleScene::Update() {
+	// スプライト(移動)
+	// タイトルバー
+	titleMove_ += 0.08f;
+	float y = -150.0f + sinf(titleMove_) * 20.0f;
+	titleBarSprite_->SetPosition({250.0f, y});
 
 	switch (phase_) {
 
-	case Phase::kMain:
+	case Phase::kMain: {
+
+		// pushバー(点滅させる)
+		if (!pushFade_) {
+			pushAlpha_ -= 0.02f;
+			if (pushAlpha_ <= 0.2f) {
+				pushFade_ = true;
+			}
+		} else {
+			pushAlpha_ += 0.02f;
+			if (pushAlpha_ >= 1.0f) {
+				pushFade_ = false;
+			}
+		}
+
+		pushBarSprite_->SetColor({1, 1, 1, pushAlpha_});
+
 		// タイトルシーンの終了条件
 		if (Input::GetInstance()->PushKey(DIK_SPACE)) {
 			// 音声再生
-			Audio::GetInstance()->PlayWave(soundBotanHandle_);
+			// Audio::GetInstance()->PlayWave(soundBotanHandle_);
 			// 音声停止
-			Audio::GetInstance()->StopWave(voiceTitleHandle_);
+			// Audio::GetInstance()->StopWave(voiceTitleHandle_);
+
 			// フェードアウト開始
 			phase_ = Phase::kFadeOut;
 			fade_->Start(Fade::Status::FadeOut, 1.0f);
 		}
 		break;
+	}
 	case Phase::kFadeIn:
 		// フェード
 		fade_->Update();
@@ -76,13 +111,11 @@ void TitleScene::Update() {
 		}
 	}
 
-	//// フェード
-	// fade_->Update();
-	worldTransformTitle_.matWorld_ = MakeAffineMatrix(worldTransformTitle_.scale_, worldTransformTitle_.rotation_, worldTransformTitle_.translation_);
-	worldTransformTitle_.TransferMatrix();
+	// worldTransformTitle_.matWorld_ = MakeAffineMatrix(worldTransformTitle_.scale_, worldTransformTitle_.rotation_, worldTransformTitle_.translation_);
+	// worldTransformTitle_.TransferMatrix();
 
-	worldTransformPlayer_.matWorld_ = MakeAffineMatrix(worldTransformPlayer_.scale_, worldTransformPlayer_.rotation_, worldTransformPlayer_.translation_);
-	worldTransformPlayer_.TransferMatrix();
+	// worldTransformPlayer_.matWorld_ = MakeAffineMatrix(worldTransformPlayer_.scale_, worldTransformPlayer_.rotation_, worldTransformPlayer_.translation_);
+	// worldTransformPlayer_.TransferMatrix();
 }
 
 void TitleScene::Draw() {
@@ -93,8 +126,12 @@ void TitleScene::Draw() {
 	Sprite::PreDraw(dxCommon_->GetCommandList());
 
 	sprite_->Draw();
+	titleBarSprite_->Draw();
+	pushBarSprite_->Draw();
 
+	// スプライトモデル描画後処理
 	Sprite::PostDraw();
+
 	// 深度バッファクリア
 	dxCommon_->ClearDepthBuffer();
 	// ３Dモデル描画前処理
@@ -102,8 +139,8 @@ void TitleScene::Draw() {
 
 	// ここに３Dモデルインスタンスの描画処理を記述する
 	/*modelTitle_->Draw(worldTransformTitle_, camera_);*/
-	modelPlayer_->Draw(worldTransformPlayer_, camera_);
-	// ３Dモデル描画後処理
+	// modelPlayer_->Draw(worldTransformPlayer_, camera_);
+	//  ３Dモデル描画後処理
 	Model::PostDraw();
 
 	fade_->Draw();
@@ -111,10 +148,13 @@ void TitleScene::Draw() {
 
 TitleScene::~TitleScene() {
 	// モデル
-	delete modelTitle_;
-	delete modelPlayer_;
+	// delete modelTitle_;
+	// delete modelPlayer_;
 
+	// スプライト
 	delete sprite_;
+	delete titleBarSprite_;
+	delete pushBarSprite_;
 
 	// フェード
 	delete fade_;
