@@ -20,7 +20,7 @@ void GameScene::Initialize() {
 	camera_.Initialize();
 
 	//// パーティクルの生成
-	//for (int i = 0; i < 150; i++) {
+	// for (int i = 0; i < 150; i++) {
 	//	// 生成
 	//	Particle* particle = new Particle();
 	//	// 位置
@@ -36,22 +36,28 @@ void GameScene::Initialize() {
 	//	velocity *= distribution(randomEngine);
 	//	velocity *= 0.1f;
 	//}
+
 	// 発生位置は乱数
 	Vector3 position = {distribution(randomEngine) * 30.0f, distribution(randomEngine) * 20.0f, 0};
 
 	// パーティクル発生
 	ParticleBorn(position);
+
+	// 背景スクロール
+	textureHandleStage_ = TextureManager::Load("Scene/stage.png");
+	stage_ = new Stage();
+	stage_->Initialize(textureHandleStage_);
 }
 
 // 更新
 void GameScene::Update() {
 	//// 確率で発生
-	 if (rand() % 20 == 0) {
+	if (rand() % 20 == 0) {
 		// 発生位置は乱数
 		Vector3 position = {distribution(randomEngine) * 30.0f, distribution(randomEngine) * 20.0f, 0};
 		// パーティクルの生成
 		ParticleBorn(position);
-	 }
+	}
 
 	// パーティクルの更新
 	for (Particle* particle : particles_) {
@@ -66,10 +72,14 @@ void GameScene::Update() {
 		}
 		return false;
 	});
+
+	// 背景
+	stage_->Update();
 }
 
 // 描画
 void GameScene::Draw() {
+
 	// 3Dモデル描画前処理
 	Model::PreDraw();
 
@@ -80,6 +90,14 @@ void GameScene::Draw() {
 
 	// 3Dモデル描画後処理
 	Model::PostDraw();
+
+	// スプライト描画前処理
+	Sprite::PreDraw();
+
+	stage_->Draw();
+
+	// スプライト描画後処理
+	Sprite::PostDraw();
 }
 
 // デストラクタ

@@ -1,7 +1,7 @@
 #pragma once
-
 #include "KamataEngine.h"
 #include "Particle.h"
+#include"Stage.h"
 
 // ゲームシーン
 class GameScene {
@@ -36,6 +36,15 @@ private:
 	Particle* particle_ = nullptr;
 	std::list<Particle*> particles_;
 
+
+	// 背景
+	Stage* stage_ = nullptr;
+
 	/// パーティクル発生
 	void ParticleBorn(KamataEngine::Vector3 position);
+
+	// 画像読み込み
+	uint32_t textureHandleStage_ = 0;
+	
+
 };
