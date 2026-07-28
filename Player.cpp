@@ -16,16 +16,16 @@ void Player::Initialize(Model* model) {
 void Player::Update() {
 	// 移動入力
 	if (Input::GetInstance()->PushKey(DIK_D)) {
-		worldTransform_.translation_.x += 0.5f;
+		worldTransform_.translation_.x += 0.4f;
 	}
 	if (Input::GetInstance()->PushKey(DIK_A)) {
-		worldTransform_.translation_.x -= 0.5f;
+		worldTransform_.translation_.x -= 0.4f;
 	}
 	if (Input::GetInstance()->PushKey(DIK_W)) {
-		worldTransform_.translation_.y += 0.5f;
+		worldTransform_.translation_.y += 0.4f;
 	}
 	if (Input::GetInstance()->PushKey(DIK_S)) {
-		worldTransform_.translation_.y -= 0.5f;
+		worldTransform_.translation_.y -= 0.4f;
 	}
 
 	// 範囲制限

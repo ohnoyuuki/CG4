@@ -3,6 +3,7 @@
 #include "Particle.h"
 #include "Player.h"
 #include "Stage.h"
+#include "GraphBar.h"
 
 // ゲームシーン
 class GameScene {
@@ -23,8 +24,13 @@ public:
 	void ParticleBorn(KamataEngine::Vector3 position);
 
 private:
-	// パーティクル3Dモデルデータ
-	KamataEngine::Model* modelParticle_ = nullptr;
+	// 3Dモデルデータ--------------------------------------------
+	KamataEngine::Model* modelParticle_ = nullptr;//パーティクル
+	KamataEngine::Model* modelPlayer_ = nullptr;//プレイヤー
+
+	// 画像読み込み----------------------------------------------
+	uint32_t textureHandleStage_ = 0;//背景
+	uint32_t textureHandleGraph_ = 0;//グラフ
 
 	// カメラ
 	KamataEngine::Camera camera_;
@@ -36,12 +42,14 @@ private:
 	// 背景
 	Stage* stage_ = nullptr;
 
-	// 画像読み込み
-	uint32_t textureHandleStage_ = 0;
-
 	// プレイヤー
 	Player* player_ = nullptr;
 
-	// モデル
-	KamataEngine::Model* modelPlayer_ = nullptr;
+	//グラフバー
+	GraphBar* graphBar_ = nullptr;
+	int hp_ = 200;
+	
+
+
+	
 };

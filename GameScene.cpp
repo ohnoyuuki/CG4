@@ -37,11 +37,11 @@ void GameScene::Initialize() {
 	//	velocity *= 0.1f;
 	//}
 
-	// 発生位置は乱数
-	Vector3 position = {distribution(randomEngine) * 30.0f, distribution(randomEngine) * 20.0f, 0};
+	//// 発生位置は乱数
+	//Vector3 position = {distribution(randomEngine) * 30.0f, distribution(randomEngine) * 20.0f, 0};
+	//// パーティクル発生
+	//ParticleBorn(position);
 
-	// パーティクル発生
-	ParticleBorn(position);
 
 	// 背景スクロール
 	textureHandleStage_ = TextureManager::Load("Scene/stage.png");
@@ -52,6 +52,11 @@ void GameScene::Initialize() {
 	modelPlayer_ = Model::CreateFromOBJ("player");
 	player_ = new Player();
 	player_->Initialize(modelPlayer_);
+
+	//グラフ
+	textureHandleGraph_ = TextureManager::Load("white1x1.png");
+	graphBar_ = new GraphBar();
+	graphBar_->Initialize(textureHandleGraph_);
 
 }
 
@@ -65,35 +70,46 @@ void GameScene::Update() {
 		ParticleBorn(position);
 	}
 
-	// パーティクルの更新
-	for (Particle* particle : particles_) {
-		particle->Update();
-	}
+	//// パーティクルの更新
+	//for (Particle* particle : particles_) {
+	//	particle->Update();
+	//}
 
 	// 終了フラグの立ったパーティクルを削除
-	particles_.remove_if([](Particle* particle) {
-		if (particle->IsFinished() == true) {
-			delete particle;
-			return true;
-		}
-		return false;
-	});
+	//particles_.remove_if([](Particle* particle) {
+	//	if (particle->IsFinished() == true) {
+	//		delete particle;
+	//		return true;
+	//	}
+	//	return false;
+	//});
 
 	// 背景
 	stage_->Update();
 
 	//プレイヤー
 	player_->Update();
+
+	//グラフバー
+	graphBar_->Update(hp_);
+	hp_--;
+	if (hp_ < 0) {
+		hp_ = 200u;
+	}
+
 }
 
 // 描画
 void GameScene::Draw() {
 	//DirectXCommonインスタンスの取得
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
-	// スプライト描画前処理
+	// スプライト描画前処理--------------------------------
 	Sprite::PreDraw(dxCommon->GetCommandList());
 
+	//背景
 	stage_->Draw();
+	//グラフ
+	graphBar_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -101,13 +117,13 @@ void GameScene::Draw() {
 
 	//深度バッファクリア
 	dxCommon->ClearDepthBuffer();
-	// 3Dモデル描画前処理
+	// 3Dモデル描画前処理----------------------------------
 	Model::PreDraw();
 
-	// パーティクル描画
-	for (Particle* particle : particles_) {
-		particle->Draw(camera_);
-	}
+	//// パーティクル描画
+	//for (Particle* particle : particles_) {
+	//	particle->Draw(camera_);
+	//}
 
 	player_->Draw(camera_);
 
@@ -123,12 +139,13 @@ GameScene::~GameScene() {
 	delete modelParticle_;
 	delete stage_;
 	delete player_;
+	delete graphBar_;
 
-	// パーティクルの解放
-	for (Particle* particle : particles_) {
-		delete particle;
-	}
-	particles_.clear();
+	//// パーティクルの解放
+	//for (Particle* particle : particles_) {
+	//	delete particle;
+	//}
+	//particles_.clear();
 }
 
 
