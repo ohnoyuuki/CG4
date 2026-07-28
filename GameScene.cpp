@@ -69,12 +69,12 @@ void GameScene::Initialize() {
 // 更新
 void GameScene::Update() {
 	//// 確率で発生
-	if (rand() % 20 == 0) {
-		// 発生位置は乱数
-		Vector3 position = {distribution(randomEngine) * 30.0f, distribution(randomEngine) * 20.0f, 0};
-		// パーティクルの生成
-		ParticleBorn(position);
-	}
+	//if (rand() % 20 == 0) {
+	//	// 発生位置は乱数
+	//	Vector3 position = {distribution(randomEngine) * 30.0f, distribution(randomEngine) * 20.0f, 0};
+	//	// パーティクルの生成
+	//	ParticleBorn(position);
+	//}
 
 	//// パーティクルの更新
 	//for (Particle* particle : particles_) {
