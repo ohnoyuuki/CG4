@@ -58,6 +58,12 @@ void GameScene::Initialize() {
 	graphBar_ = new GraphBar();
 	graphBar_->Initialize(textureHandleGraph_);
 
+	//スコア
+	textureHandleNumber_ = TextureManager::Load("number.png");
+	drawNumber_ = new DrawNumber();
+	drawNumber_->Initialize(textureHandleNumber_);
+
+
 }
 
 // 更新
@@ -97,6 +103,10 @@ void GameScene::Update() {
 		hp_ = 200u;
 	}
 
+	//スコア
+	gameScore_++;
+	drawNumber_->Update(gameScore_);
+
 }
 
 // 描画
@@ -110,6 +120,8 @@ void GameScene::Draw() {
 	stage_->Draw();
 	//グラフ
 	graphBar_->Draw();
+	//スコア
+	drawNumber_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -140,6 +152,7 @@ GameScene::~GameScene() {
 	delete stage_;
 	delete player_;
 	delete graphBar_;
+	delete drawNumber_;
 
 	//// パーティクルの解放
 	//for (Particle* particle : particles_) {
